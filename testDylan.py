@@ -1,9 +1,9 @@
 from flask import Flask
 from random import randint
 import time
-import asyncio
 
 # This mess will be cleaned soon enough
+
 class Tama:
 
     def __init__(self, n):
@@ -12,7 +12,6 @@ class Tama:
         self.age = 0
         self.score = 0
         self.life = 100
-        self.species = ('cat', 'dog', 'fish')[randint(0, 2)] # <- nullified; too lazy to remove this
 
     def setScore(n):
 
@@ -22,22 +21,24 @@ class Tama:
 app = Flask('Tamagotchi')
 
 
-async def live(obj):
+def live(obj):
 
     while obj.life > 0:
-        await record(obj)
+        record(obj) # this is why the program doesn't work, for anybody who is more experienced with asyncio than I (probably everybody)
         time.sleep(10_000)
         obj.life -= 1
+        obj.age += 1
 
-    if obj.score > -1: # TODO! Find a way to store objects on the user's device, then compare scores
+    if obj.score > -1: # TODO! Find a way to store objects on the user's device, then compare scores (change -1 to the actual score)
         return obj
     
     print(f'New pet! Care to name it? (Leave blank if no)')
     return Tama(input())
 
 #@app.route("/")
-async def record(obj):
-    print(f'<p>Pet stats: </br>Name: {obj.name} </br>Age: {obj.age} </br>species: {obj.species} </br>Score: {obj.score}</p>') #print() for now; should reroute to the site later
+def record(obj):
+
+    print(f'<p>Pet stats: </br>Name: {obj.name} </br>Age: {obj.age} </br>Score: {obj.score}</p>')
 
 def main():
 
@@ -49,4 +50,4 @@ def main():
     main()
 
 print('New Pet! Care to name it? (Leave blank if no)')   
-asyncio.run(main())
+main()
