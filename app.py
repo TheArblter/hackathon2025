@@ -7,6 +7,8 @@ currentBudgeter = None
 currentGoalWeekly = None
 inLoop = True
 
+# this line does nothing! It is only here, because I made a commit to the wrong branch, so now my changes won't be reflected
+
 @app.route("/")
 def index():
      return render_template('index.html')
